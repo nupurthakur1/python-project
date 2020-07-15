@@ -22,9 +22,8 @@ def _login(username, password):
         #check hash column
         hash_password = _convert_to_hash(password)
 
-        hash_value, stored_password = _check_hash_column(username)
-        
-        
+        hash_value, stored_password = _check_hash_column(user_data)
+               
         if hash_value is None and stored_password == password:
             _update_hash_column(username, hash_password)
             return 'Login Success'
@@ -41,8 +40,8 @@ def _login(username, password):
     
     def _convert_to_hash(password):
 
-    from hashlib import sha256
-    h = sha256()
+        from hashlib import sha256
+        h = sha256()
     
     def hi(alist):
     i=0
@@ -57,11 +56,11 @@ def _login(username, password):
     print(alist)
 return hashed_password, stored_password
 
-def _check_hash_column(username):
-    user_info = users_password_info_dict.get('username')
-    if user_info is not None:
-        return user_info.get('password_hash')
-    return None
+def _check_hash_column(user_data):
+    password = user_data.get('password')
+    hash_password = user_data.get('password_hash')
+
+    return hash_password, password
 
 
 #----------------------------------------------------------------
@@ -69,8 +68,10 @@ def _check_hash_column(username):
 def _check_password():
     pass
 
-def _update_hash_column(username, password)
-    pass
+def _update_hash_column(username, hash_password):
+    
+    users_password_info_dict[username]['password_hash'] = hash_password
+    
 
 #-----------------------------------------------------------------------
 
